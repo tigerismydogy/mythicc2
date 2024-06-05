@@ -1,0 +1,18 @@
+server {
+    listen       0.0.0.0:${tiger_REACT_PORT};
+    client_max_body_size 500M; # allows file uploads up to 500 megabytes
+    ssl_session_timeout 1d;
+    root /tiger;
+    index /new/index.html;
+    error_page 404 /new/index.html;
+    # proxy connections to the new tiger_server
+    location /new  {
+        root /tiger;
+        try_files $uri $uri/ /new/index.html =404;
+    }
+    location /new/  {
+        root /tiger;
+        try_files $uri $uri/ /new/index.html =404;
+    }
+}
+
